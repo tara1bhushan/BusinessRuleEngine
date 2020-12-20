@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Items>
+	<PhysicalProduct>PackingSlip</PhysicalProduct>
+	<PhysicalProduct>GenerateCommision</PhysicalProduct>
+	<Book>DuplicatePackingSlip</Book>
+	<Book>GenerateCommision</Book>
+	<CreateMembership>ActivateMembership</CreateMembership>
+	<CreateMembership>EmailOwner</CreateMembership>
+	<UpdateMembership>UpgradeMembership</UpdateMembership>
+	<UpdateMembership>EmailOwner</UpdateMembership>
+	<Video>
+		<Name>Learning to Ski</Name>
+		<text>FirstAidVideo</text>
+	</Video>
+</Items>
+
+-----------
+{
+	"Items": {
+		"PhysicalProduct": ["PackingSlip","GenerateCommision"],
+		"Book": ["DuplicatePackingSlip","GenerateCommision"],
+		"CreateMembership": ["ActivateMembership","EmailOwner"],
+		"UpdateMembership": ["UpgradeMembership","EmailOwner"],
+		"Video": {
+			"Name": "Learning to Ski",
+			"text": "FirstAidVideo"
+		}
+	}
+}
