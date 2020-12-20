@@ -1,0 +1,12 @@
+{
+	"Items": {
+		"PhysicalProduct": ["PackingSlip","GenerateCommision"],
+		"Book": ["DuplicatePackingSlip","GenerateCommision"],
+		"CreateMembership": ["ActivateMembership","EmailOwner"],
+		"UpdateMembership": ["UpgradeMembership","EmailOwner"],
+		"Video": {
+			"Name": "Learning to Ski",
+			"text": "FirstAidVideo"
+		}
+	}
+}

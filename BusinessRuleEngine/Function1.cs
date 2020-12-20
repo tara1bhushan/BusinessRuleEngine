@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace BusinessRuleEngine
 {
@@ -26,8 +27,12 @@ namespace BusinessRuleEngine
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-
+            var bb = data.name;
+            foreach(var items in bb)
+            {
+                var j = items.Value;
+                CallServices(j);
+            }
             string responseMessage = string.IsNullOrEmpty(name)
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
                 : $"Hello, {name}. This HTTP triggered function executed successfully.";
@@ -35,33 +40,30 @@ namespace BusinessRuleEngine
             return new OkObjectResult(responseMessage);
         }
 
-        private static void PackingSlip(string paramVal)
+        private static void CallServices(string j)
         {
-            throw new NotImplementedException();
-        }
-        private static void GenerateCommision(string paramVal)
-        {
-            throw new NotImplementedException();
-        }
-        private static void DuplicatePackingSlip(string paramVal)
-        {
-            throw new NotImplementedException();
-        }
-        private static void ActivateMembership(string paramVal)
-        {
-            throw new NotImplementedException();
-        }
-        private static void UpgradeMembership(string paramVal)
-        {
-            throw new NotImplementedException();
-        }
-        private static void EmailOwner(string paramVal)
-        {
-            throw new NotImplementedException();
-        }
-        private static void FirstAidVideo(string paramVal)
-        {
-            throw new NotImplementedException();
-        }
+            using (StreamReader r = new StreamReader("./ProductReturn_schema.json"))
+            {
+                string json = r.ReadToEnd();
+                dynamic items = JsonConvert.DeserializeObject(json);
+                foreach(var item in items.Items)
+                {
+                    if(item.Name==j)
+                    {
+                        foreach(string methods in item.Value)
+                        {
+                            Type calledType = Type.GetType(methods);
+                            String s = (String)calledType.InvokeMember(
+                                            j,
+                                            BindingFlags.InvokeMethod | BindingFlags.Public |
+                                                BindingFlags.Static,
+                                            null,
+                                            null,
+                                            new Object[] { "" });
+                        }
+                    }
+                }
+            }
+        }        
     }
 }
